@@ -1,6 +1,8 @@
 tags:
-  - a tag
+  - `Map` implementation
+  - Hash functions
+  - Mutable objects
 languages:
-  - a language
+  - Java
 resources: 
   - 0
