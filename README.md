@@ -178,7 +178,7 @@ public class SillyString {
 	}
 ```
 
-This class is not very useful, which is why it's called `SillyString`, but we'll use it to show how class can define its own hash function:
+This class is not very useful, which is why it's called `SillyString`, but we'll use it to show how a class can define its own hash function:
 
 ```java
 	@Override
