@@ -216,6 +216,7 @@ Strings are immutable and `SillyString` is also immutable because `innerString` 
 
 But let's see what happens with a mutable object.  Here's a definition for `SillyArray`, which is identical to `SillyString`, except that it uses an array of characters instead of a String:
 
+```java
 public class SillyArray {
 	private final char[] array;
 
@@ -255,7 +256,7 @@ Now suppose we create a `SillyArray` and add it to a map:
 
 ```java
         SillyArray array1 = new SillyArray("Word1".toCharArray());
-		map.put(array1, 1);
+	map.put(array1, 1);
 ```
 
 The hash code for this array is 461.  Now if we modify the contents of the array and they try to look it up:
