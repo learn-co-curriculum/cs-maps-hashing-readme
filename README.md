@@ -247,7 +247,7 @@ public class SillyArray {
 `SillyArray` also provides `setChar`, which makes it possible to modify the characters in the array:
 
 ```java
-        public void setChar(int i, char c) {
+	public void setChar(int i, char c) {
 		this.array[i] = c;
 	}
 ```
@@ -255,15 +255,15 @@ public class SillyArray {
 Now suppose we create a `SillyArray` and add it to a map:
 
 ```java
-        SillyArray array1 = new SillyArray("Word1".toCharArray());
-	map.put(array1, 1);
+    SillyArray array1 = new SillyArray("Word1".toCharArray());
+    map.put(array1, 1);
 ```
 
 The hash code for this array is 461.  Now if we modify the contents of the array and they try to look it up:
 
 ```java
-        array1.setChar(0, 'C');
-	Integer value = map.get(array1);
+    array1.setChar(0, 'C');
+    Integer value = map.get(array1);
 ```
 
 The hash code after the mutation is 441.  With a different hash code, there's a good chance we'll go looking in the wrong sub-map.  In that case, we won't find the key, even though it is in the map.  And that's bad.
