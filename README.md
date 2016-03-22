@@ -123,7 +123,7 @@ One possibility is to choose one of the sub-maps at random and keep track of whe
 
 A better approach is to use a **hash function**, which takes an Object, any Object, and returns an integer called a **hash code**.  Importantly, if it sees the same Object more than once, it always returns the same hash code.  That way, if we use the hash code to store a key, we'll get the same hash code when we look it up.
 
-Java provides a method called `hashCode` that does what we want, and every Object provides one.  The details of the implementation are different for different objects; we'll see an example soon.
+In Java, every `Object` provides a method called `hashCode` that computes a hash function.  The implementation of this method is different for different objects; we'll see an example soon.
 
 Here's the helper function we wrote to choose the right sub-map for a given key:
 
