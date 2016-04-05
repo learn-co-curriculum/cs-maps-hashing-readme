@@ -18,21 +18,21 @@ In this readme, we'll look at solutions to the previous lab and analyze the perf
 We'll start with our solutions to the previous lab and then analyze their performance.  Here are `findEntry` and `equals`:
 
 ```java
-	private Entry findEntry(Object target) {
-		for (Entry entry: entries) {
-			if (equals(target, entry.getKey())) {
-				return entry;
-			}
+private Entry findEntry(Object target) {
+	for (Entry entry: entries) {
+		if (equals(target, entry.getKey())) {
+			return entry;
 		}
-		return null;
 	}
+	return null;
+}
 
-	private boolean equals(Object target, Object obj) {
-		if (target == null) {
-			return obj == null;
-		}
-		return target.equals(obj);
+private boolean equals(Object target, Object obj) {
+	if (target == null) {
+		return obj == null;
 	}
+	return target.equals(obj);
+}
 ```
 
 The runtime of `equals` might depend on the size of the `target` and the `keys`, but does not generally depend on the number of entries, `n`.  So `equals` is constant time.
@@ -42,36 +42,36 @@ In `findEntry`, we might get lucky and find the key we're looking for at the beg
 Most of the core methods in `MyLinearMap` use `findEntry`, including `put`, `get`, and `remove`.  Here's what they look like:
 
 ```java
-    public V put(K key, V value) {
-		Entry entry = findEntry(key);
-		if (entry == null) {
-			entries.add(new Entry(key, value));
-			return null;
-		} else {
-			V oldValue = entry.getValue();
-			entry.setValue(value);
-			return oldValue;
-		}
+public V put(K key, V value) {
+	Entry entry = findEntry(key);
+	if (entry == null) {
+		entries.add(new Entry(key, value));
+		return null;
+	} else {
+		V oldValue = entry.getValue();
+		entry.setValue(value);
+		return oldValue;
 	}
+}
 
-    public V get(Object key) {
-		Entry entry = findEntry(key);
-		if (entry == null) {
-			return null;
-		}
-		return entry.getValue();
+public V get(Object key) {
+	Entry entry = findEntry(key);
+	if (entry == null) {
+		return null;
 	}
+	return entry.getValue();
+}
 	
-    public V remove(Object key) {
-		Entry entry = findEntry(key);
-		if (entry == null) {
-			return null;
-		} else {
-			V value = entry.getValue();
-			entries.remove(entry);
-			return value;
-		}
+public V remove(Object key) {
+	Entry entry = findEntry(key);
+	if (entry == null) {
+		return null;
+	} else {
+		V value = entry.getValue();
+		entries.remove(entry);
+		return value;
 	}
+}
 ```
 
 After `put` calls `findEntry`, everything else is constant time.  Remember that `entries` is an `ArrayList`, so adding an element *at the end* is constant time, on average.  If the key is already in the map, we don't have to add an entry, but we have to call `entry.getValue` and `entry.setValue`, and those are both constant time.  Adding it all up, `put` is linear.
@@ -128,28 +128,28 @@ In Java, every `Object` provides a method called `hashCode` that computes a hash
 Here's the helper function we wrote to choose the right sub-map for a given key:
 
 ```java
-	protected MyLinearMap<K, V> chooseMap(Object key) {
-		int index = key==null ? 0 : key.hashCode() % maps.size();
-		return maps.get(index);
-	}
+protected MyLinearMap<K, V> chooseMap(Object key) {
+	int index = key==null ? 0 : key.hashCode() % maps.size();
+	return maps.get(index);
+}
 ```
 
 If `key` is `null`, we choose the sub-map with index 0, arbitrarily.  Otherwise we use `hashCode` to get an integer and then apply the modulus operator, `%`, which guarantees that the result is between 0 and `maps.size()-1`.  So `index` is always a valid index into `maps`.  Then `chooseMap` returns a reference to the map it chose.
 
-We use `chooseMap` in both `put` and `get`, so when we look up a key, we get the same map we chose when we added the key.  At least, we should: we'll explain a little later why this might not work.
+We use `chooseMap` in both `put` and `get`, so when we look up a key, we get the same map we chose when we added the key.  At least, we should — we'll explain a little later why this might not work.
 
 Here's our implementation of `put` and `get`:
 
 ```java
-	public V put(K key, V value) {
-		MyLinearMap<K, V> map = chooseMap(key);
-		return map.put(key, value);
-	}
+public V put(K key, V value) {
+  MyLinearMap<K, V> map = chooseMap(key);
+	return map.put(key, value);
+}
 
-	public V get(Object key) {
-		MyLinearMap<K, V> map = chooseMap(key);
-		return map.get(key);
-	}
+public V get(Object key) {
+	MyLinearMap<K, V> map = chooseMap(key);
+	return map.get(key);
+}
 ```
 
 Pretty simple, right?  In both methods, we use `chooseMap` to find the right sub-map and then invoke a method on the sub-map.  In the next lab, you'll have a chance to finish off a few other methods.  But first, let's think about performance.
@@ -181,20 +181,20 @@ public class SillyString {
 This class is not very useful, which is why it's called `SillyString`, but we'll use it to show how a class can define its own hash function:
 
 ```java
-	@Override
-	public boolean equals(Object other) {
-		return this.toString().equals(other.toString());
-	}
+@Override
+public boolean equals(Object other) {
+	return this.toString().equals(other.toString());
+}
 	
-	@Override
-	public int hashCode() {
-		int total = 0;
-		for (int i=0; i<innerString.length(); i++) {
-			total += innerString.charAt(i);
-		}
-		System.out.println(total);
-		return total;
+@Override
+public int hashCode() {
+	int total = 0;
+	for (int i=0; i<innerString.length(); i++) {
+		total += innerString.charAt(i);
 	}
+	System.out.println(total);
+	return total;
+}
 ```
 
 Notice that `SillyString` overrides both `equals` and `hashCode`.  This is important.  In order to work properly, `equals` has to be consistent with `hashCode`, which means that if two objects are considered equal — that is, `equals` returns `true` — they should have the same hash code.  But this requirement only works one way; if two objects have the same hash code, they don't necessarily have to be equal.
@@ -247,23 +247,23 @@ public class SillyArray {
 `SillyArray` also provides `setChar`, which makes it possible to modify the characters in the array:
 
 ```java
-	public void setChar(int i, char c) {
-		this.array[i] = c;
-	}
+public void setChar(int i, char c) {
+	this.array[i] = c;
+}
 ```
 
 Now suppose we create a `SillyArray` and add it to a map:
 
 ```java
-    SillyArray array1 = new SillyArray("Word1".toCharArray());
-    map.put(array1, 1);
+SillyArray array1 = new SillyArray("Word1".toCharArray());
+map.put(array1, 1);
 ```
 
 The hash code for this array is 461.  Now if we modify the contents of the array and they try to look it up:
 
 ```java
-    array1.setChar(0, 'C');
-    Integer value = map.get(array1);
+array1.setChar(0, 'C');
+Integer value = map.get(array1);
 ```
 
 The hash code after the mutation is 441.  With a different hash code, there's a good chance we'll go looking in the wrong sub-map.  In that case, we won't find the key, even though it is in the map.  And that's bad.
