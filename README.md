@@ -1,6 +1,6 @@
 # cs-maps-hashing-readme
 
-## Learning goals
+## Learning goals 
 
 1.  Analyze the performance of a simple `Map` implementation.
 2.  Implement the `Map` interface using multiple lists.
@@ -61,7 +61,7 @@ public V get(Object key) {
 	}
 	return entry.getValue();
 }
-
+	
 public V remove(Object key) {
 	Entry entry = findEntry(key);
 	if (entry == null) {
@@ -99,9 +99,9 @@ Here's the beginning of the class definition:
 
 ```java
 public class MyBetterMap<K, V> implements Map<K, V> {
-
+	
 	protected List<MyLinearMap<K, V>> maps;
-
+	
 	public MyBetterMap(int k) {
 		makeMaps(k);
 	}
@@ -185,7 +185,7 @@ This class is not very useful, which is why it's called `SillyString`, but we'll
 public boolean equals(Object other) {
 	return this.toString().equals(other.toString());
 }
-
+	
 @Override
 public int hashCode() {
 	int total = 0;
@@ -227,12 +227,12 @@ public class SillyArray {
 	public String toString() {
 		return Arrays.toString(array);
 	}
-
+	
 	@Override
 	public boolean equals(Object other) {
 		return this.toString().equals(other.toString());
 	}
-
+	
 	@Override
 	public int hashCode() {
 		int total = 0;
