@@ -1,6 +1,6 @@
 # cs-maps-hashing-readme
 
-## Learning goals 
+## Learning goals
 
 1.  Analyze the performance of a simple `Map` implementation.
 2.  Implement the `Map` interface using multiple lists.
@@ -61,7 +61,7 @@ public V get(Object key) {
 	}
 	return entry.getValue();
 }
-	
+
 public V remove(Object key) {
 	Entry entry = findEntry(key);
 	if (entry == null) {
@@ -99,9 +99,9 @@ Here's the beginning of the class definition:
 
 ```java
 public class MyBetterMap<K, V> implements Map<K, V> {
-	
+
 	protected List<MyLinearMap<K, V>> maps;
-	
+
 	public MyBetterMap(int k) {
 		makeMaps(k);
 	}
@@ -142,7 +142,7 @@ Here's our implementation of `put` and `get`:
 
 ```java
 public V put(K key, V value) {
-  MyLinearMap<K, V> map = chooseMap(key);
+	MyLinearMap<K, V> map = chooseMap(key);
 	return map.put(key, value);
 }
 
@@ -185,7 +185,7 @@ This class is not very useful, which is why it's called `SillyString`, but we'll
 public boolean equals(Object other) {
 	return this.toString().equals(other.toString());
 }
-	
+
 @Override
 public int hashCode() {
 	int total = 0;
@@ -212,7 +212,7 @@ If many objects have the same hash code, they end up in the same sub-map, and so
 
 ## Hashing and mutation
 
-Strings are immutable and `SillyString` is also immutable because `innerString` is declared to be `final`.  Once you create a `SillyString`, you can't make `innerString` refer to a different String, and you can change the String it refers to.  Therefore, it will always have the same hash code.
+Strings are immutable and `SillyString` is also immutable because `innerString` is declared to be `final`.  Once you create a `SillyString`, you can't make `innerString` refer to a different String, and you can't change the String it refers to.  Therefore, it will always have the same hash code.
 
 But let's see what happens with a mutable object.  Here's a definition for `SillyArray`, which is identical to `SillyString`, except that it uses an array of characters instead of a String:
 
@@ -227,12 +227,12 @@ public class SillyArray {
 	public String toString() {
 		return Arrays.toString(array);
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		return this.toString().equals(other.toString());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int total = 0;
