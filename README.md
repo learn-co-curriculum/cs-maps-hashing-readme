@@ -142,7 +142,7 @@ Here's our implementation of `put` and `get`:
 
 ```java
 public V put(K key, V value) {
-  MyLinearMap<K, V> map = chooseMap(key);
+	MyLinearMap<K, V> map = chooseMap(key);
 	return map.put(key, value);
 }
 
@@ -212,7 +212,7 @@ If many objects have the same hash code, they end up in the same sub-map, and so
 
 ## Hashing and mutation
 
-Strings are immutable and `SillyString` is also immutable because `innerString` is declared to be `final`.  Once you create a `SillyString`, you can't make `innerString` refer to a different String, and you can change the String it refers to.  Therefore, it will always have the same hash code.
+Strings are immutable and `SillyString` is also immutable because `innerString` is declared to be `final`.  Once you create a `SillyString`, you can't make `innerString` refer to a different String, and you can't change the String it refers to.  Therefore, it will always have the same hash code.
 
 But let's see what happens with a mutable object.  Here's a definition for `SillyArray`, which is identical to `SillyString`, except that it uses an array of characters instead of a String:
 
